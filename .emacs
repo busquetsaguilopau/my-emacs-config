@@ -12,6 +12,7 @@
 ; emacs startup screen
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
+(toggle-frame-maximized)
 
 
 ;---;
@@ -40,14 +41,46 @@ t)
 ; 3 ; Themes
 ;---;
 
-; Dracula
-(use-package dracula-theme :ensure t)
-(require 'dracula-theme)
-'(custom-enabled-themes (quote (dracula)))
+; Zerodark "Dark Theme"
+(use-package zerodark-theme :ensure t)
+(require 'zerodark-theme :ensure t)
+(load-theme 'zerodark t)
+
 
 ;---;
 ; 4 ; Packages
 ;---;
+
+;; Ecb
+;(use-package ecb :ensure t)
+;(require 'ecb)
+;(ecb-activate)
+
+;; Ace Window
+(use-package ace-window :ensure t)
+(require 'ace-window)
+(global-set-key (kbd "M-o") 'ace-window)
+
+;; Latex
+(use-package latex-preview-pane :ensure t)
+(require 'latex-preview-pane)
+
+;; Markdown
+(use-package markdown-mode :ensure t)
+(require 'markdown-mode)
+(use-package eww :ensure t)
+(require 'eww)
+(use-package markdown-preview-eww :ensure t)
+(require 'markdown-preview-eww)
+(use-package markdown-preview-mode :ensure t)
+
+;; Elisp
+(use-package elisp-lint :ensure t)
+(require 'elisp-lint)
+
+;; Magin
+(use-package magit :ensure t)
+(require 'magit)
 
 ;; Flycheck
 (use-package flycheck :ensure t)
@@ -65,10 +98,17 @@ t)
 (global-set-key [M-right] 'tabbar-forward-tab)
 (global-set-key [M-down] 'next-buffer)
 
-;; Neotree
-(use-package neotree :ensure t)
-(require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
+
+;; Neotree && Projectile
+;(use-package neotree :ensure t)
+;(require 'neotree)
+;(neotree-toggle)
+;(global-set-key [f8] 'neotree-toggle)
+
+(use-package projectile :ensure t)
+(require 'projectile)
+;(setq neo-smart-open t)
+;(setq projectile-switch-project-action 'neotree-projectile-action)
 
 
 ;---;
@@ -78,21 +118,18 @@ t)
 ;; Python Mode
 (use-package python-mode :ensure t)
 (require 'python-mode)
-(use-package flycheck-pycheckers :ensure t)
-(require 'flycheck-pycheckers)
 
 ;; Matlab Mode
 ;(use-package matlab-mode :ensure t)
 ;(require 'matlab-mode)
-;(matlab-cedet-setup)
 
 ;; Julia Mode
-(use-package julia-mode :ensure julia-mode)
-(use-package flycheck-julia :ensure flycheck-julia)
+(use-package julia-mode :ensure t)
 (require 'julia-mode)
-(require 'flycheck-julia)
-(flycheck-julia-setup)
-;(add-to-list 'flycheck-global-modes 'julia-mode)
+
+;---;
+; 7 ; Extra Functions
+;---;
 
 ;-----;
 ; end ; AUTO-SYSTEM
