@@ -14,6 +14,9 @@
 (setq inhibit-startup-message t)
 (toggle-frame-maximized)
 
+; extra
+(when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
+
 
 ;---;
 ; 1 ; Add Melpa repositories
@@ -55,6 +58,10 @@ t)
 ;(use-package ecb :ensure t)
 ;(require 'ecb)
 ;(ecb-activate)
+
+;; Auto-Pause
+(use-package auto-pause :ensure t)
+(require 'auto-pause)
 
 ;; Ace Window
 (use-package ace-window :ensure t)
@@ -100,10 +107,10 @@ t)
 
 
 ;; Neotree && Projectile
-;(use-package neotree :ensure t)
-;(require 'neotree)
-;(neotree-toggle)
-;(global-set-key [f8] 'neotree-toggle)
+(use-package neotree :ensure t)
+(require 'neotree)
+(neotree-toggle)
+(global-set-key [f8] 'neotree-toggle)
 
 (use-package projectile :ensure t)
 (require 'projectile)
@@ -120,12 +127,26 @@ t)
 (require 'python-mode)
 
 ;; Matlab Mode
-;(use-package matlab-mode :ensure t)
-;(require 'matlab-mode)
+(if (not (package-installed-p 'matlab-mode))
+(progn
+  (package-refresh-contents)
+  (package-install 'matlab-mode)))
+(autoload 'matlab-mode "matlab" "Matlab Editing Mode" t)
+(add-to-list
+ 'auto-mode-alist
+ '("\\.m$" . matlab-mode))
+(setq matlab-indent-function t)
+(setq matlab-shell-command "matlab")
 
 ;; Julia Mode
+(use-package julia-shell :ensure t)
 (use-package julia-mode :ensure t)
-(require 'julia-mode)
+(autoload 'julia-mode "julia" "Julia Editing Mode" t)
+(add-to-list
+ 'auto-mode-alist
+ '("\\.jl$" . julia-mode))
+
+;(require 'julia-mode)
 
 ;---;
 ; 7 ; Extra Functions
@@ -134,3 +155,17 @@ t)
 ;-----;
 ; end ; AUTO-SYSTEM
 ;-----;
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (julia-mode zerodark-theme use-package tabbar python-mode projectile neotree matlab-mode markdown-preview-mode markdown-preview-eww magit latex-preview-pane flycheck elisp-lint ace-window))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
