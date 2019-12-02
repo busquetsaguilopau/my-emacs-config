@@ -1,5 +1,3 @@
-
-
 ;---;
 ; 0 ; Internal features and gui
 ;---;
